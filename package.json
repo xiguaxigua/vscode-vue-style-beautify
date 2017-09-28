@@ -1,34 +1,73 @@
 {
-    "name": "vue-style-beautify",
-    "displayName": "vue-style-beautify",
-    "description": "",
-    "version": "0.0.1",
-    "publisher": "xiguaxigua",
-    "engines": {
-        "vscode": "^1.18.0"
-    },
-    "categories": [
-        "Other"
+  "name": "vue-style-beautify",
+  "displayName": "vue-style-beautify",
+  "description": "beautify css in your vue project",
+  "version": "0.0.1",
+  "publisher": "xiguaxigua",
+  "engines": {
+    "vscode": "^1.18.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onCommand:vueStyle.beautify",
+    "onLanguage:css",
+    "onLanguage:less",
+    "onLanguage:sass",
+    "onLanguage:sass-indented",
+    "onLanguage:scss"
+  ],
+  "main": "./extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vueStyle.beautify",
+        "title": "beautify css"
+      }
     ],
-    "activationEvents": [
-        "onCommand:extension.sayHello"
-    ],
-    "main": "./extension",
-    "contributes": {
-        "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
-        }]
+    "configuration": {
+      "type": "object",
+      "title": "vue style beautify config",
+      "properties": {
+        "vueStyle.formatOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Auto format while save file.",
+          "scope": "resource"
+        },
+        "vueStyle.ignoreFilesOnSave": {
+          "type": "array",
+          "default": [],
+          "description": "files witch not format while save",
+          "scope": "resource"
+        }
+      }
     },
-    "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.6",
-        "eslint": "^4.6.1",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
-    }
+    "keybindings": [
+      {
+        "mac": "cmd+shift+i",
+        "win": "shift+f10",
+        "linux": "shift+f10",
+        "key": "shift+f10",
+        "command": "vueStyle.beautify",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^7.0.43",
+    "eslint": "^4.6.1",
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6"
+  },
+  "dependencies": {
+    "csscomb": "^4.2.0",
+    "micromatch": "^3.1.4"
+  }
 }

@@ -1,13 +1,12 @@
 const vscode = require('vscode');
 
 function activate(context) {
-    console.log('Congratulations, your extension "vue-style-beautify" is now active!');
+  let disposable = vscode.commands.registerTextEditorCommand('vueStyle.beautify', function (textEditor) {
+    vscode.window.showInformationMessage('Hello World!');
+    console.log(textEditor)
+  });
 
-    let disposable = vscode.commands.registerTextEditorCommand('extension.sayHello', function (textEditor) {
-        vscode.window.showInformationMessage('Hello World!');
-    });
-
-    context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
 }
 exports.activate = activate;
 
