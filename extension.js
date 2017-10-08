@@ -1,12 +1,18 @@
 const vscode = require('vscode');
 
 function activate(context) {
-  let disposable = vscode.commands.registerTextEditorCommand('vueStyle.beautify', function (textEditor) {
+  const onCommand = vscode.commands.registerTextEditorCommand('vueStyle.beautify', function (textEditor) {
     vscode.window.showInformationMessage('Hello World!');
     console.log(textEditor)
   });
 
-  context.subscriptions.push(disposable);
+  const onSave = vscode.workspace.onWillSaveTextDocument((event) => {
+    vscode.window.showInformationMessage('save Hello World!');
+    console.log(event)
+  });
+
+  context.subscriptions.push(onCommand);
+  context.subscriptions.push(onSave);
 }
 exports.activate = activate;
 

@@ -12,6 +12,7 @@
   ],
   "activationEvents": [
     "onCommand:vueStyle.beautify",
+    "onLanguage:vue",
     "onLanguage:css",
     "onLanguage:less",
     "onLanguage:sass",
