@@ -33,7 +33,7 @@
       "properties": {
         "vueStyle.formatOnSave": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Auto format while save file.",
           "scope": "resource"
         },

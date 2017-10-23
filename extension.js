@@ -1,4 +1,6 @@
 const vscode = require('vscode');
+const csscomb = require('csscomb');
+const defaultConfig = require('./src/default-config');
 
 const EMBEDDED_FILE_SUPPORT = ['html', 'htm', 'vue', 'vue-html']
 const CSS_FILE_SUPPORT = ['css', 'less', 'scss', 'sass', 'sass-indented']
@@ -28,22 +30,21 @@ function getEmbeddedBlock (args) {
       do {
         char = text.charAt(pos);
         tag += char;
-        pos++
+        pos++;
       } while (char !== '>' && pos < text.length);
 
       const matchedSyntax = tag.match(/lang=['"](.+)?['"]/);
-      syntax = matchedSyntax[1] || 'css'
-
+      syntax = matchedSyntax[1] || 'css';
       startIndex = pos + 1;
     }
 
     if (char === '<' && text.substr(pos, 8) === '</style>') {
-      content = text.substring(startIndex, pos)
+      content = text.substring(startIndex, pos);
       const start = document.positionAt(startIndex);
       const end = document.positionAt(pos);
-      const range = new vscode.Range(start, end)
+      const range = new vscode.Range(start, end);
 
-      return { range, content, syntax }
+      return { range, content, syntax };
     }
 
     pos++;
@@ -56,7 +57,7 @@ function getCssBlock (args) {
   let content = null;
 
   if (!selection || (selection && selection.isEmpty)) {
-    const lastLine = this.document.lineAt(this.document.lineCount - 1);
+    const lastLine = document.lineAt(document.lineCount - 1);
     const start = new vscode.Position(0, 0);
     const end = new vscode.Position(document.lineCount - 1, lastLine.text.length);
     range = new vscode.Range(start, end);
@@ -69,28 +70,48 @@ function getCssBlock (args) {
   return { range, content, syntax: 'css' };
 }
 
+function getBlock (args) {
+  const { languageId, document, selection } = args
+  let block = null;
+  if (~EMBEDDED_FILE_SUPPORT.indexOf(languageId)) {
+    block = getEmbeddedBlock({ document });
+  } else if (~CSS_FILE_SUPPORT.indexOf(languageId)) {
+    block = getCssBlock({ document, selection });
+  } else {
+    showOutput(`${ languageId } syntac not support now.`);
+  }
+  return block
+}
+
 function activate(context) {
   const onCommand = vscode.commands.registerTextEditorCommand('vueStyle.beautify', function (textEditor) {
-    vscode.window.showInformationMessage('Hello World!');
     const { document, selection } = textEditor;
     const { languageId } = document;
-    let block = {};
+    const block = getBlock({ languageId, document, selection });
+    if (!block) return;
+    const { range, content, syntax } = block;
+    const combHandler = new csscomb(defaultConfig);
 
-    if (~EMBEDDED_FILE_SUPPORT.indexOf(languageId)) {
-      block = getEmbeddedBlock({ document });
-    } else if (~CSS_FILE_SUPPORT.indexOf(languageId)) {
-      block = getCssBlock({ document, selection });
-    } else {
-      return showOutput(`${ languageId } syntac not support now.`);
-    }
-    console.log(block);
-    console.log(textEditor);
-    console.log(showOutput);
+    combHandler.processString(content, { syntax }).then(newString => {
+      textEditor.edit(builder => {
+        builder.replace(range, newString);
+      })
+    }, err => showOutput(err));
   });
 
   const onSave = vscode.workspace.onWillSaveTextDocument((event) => {
-    vscode.window.showInformationMessage('save Hello World!');
-    console.log(event);
+    const { document } = event;
+    const { languageId } = document;
+    const settings = vscode.workspace.getConfiguration('vueStyle');
+    if (!settings || !settings.formatOnSave) return null;
+    const block = getBlock({ languageId, document });
+    if (!block) return;
+    const { range, content, syntax } = block;
+    const combHandler = new csscomb(defaultConfig);
+    const actions = combHandler.processString(content, { syntax }).then(newString => {
+      return [vscode.TextEdit.replace(range, newString)]
+    }, err => showOutput(err));
+    event.waitUntil(actions)
   });
 
   context.subscriptions.push(onCommand);
