@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 const csscomb = require('csscomb');
-const defaultConfig = require('./src/default-config');
+const defaultConfig = require('./default-config');
 
 const EMBEDDED_FILE_SUPPORT = ['html', 'htm', 'vue', 'vue-html']
 const CSS_FILE_SUPPORT = ['css', 'less', 'scss', 'sass', 'sass-indented']
