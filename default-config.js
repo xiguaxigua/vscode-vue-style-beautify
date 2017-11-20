@@ -88,5 +88,5 @@ module.exports = {
   "tab-size": true,
   "unitless-zero": true,
   "vendor-prefix-align": true,
-  "sort-order": order
+  "sort-order": order.toString().split(',')
 }

@@ -96,7 +96,7 @@ function activate(context) {
       textEditor.edit(builder => {
         builder.replace(range, newString);
       })
-    }, err => showOutput(err));
+    }, err => showOutput(err.stack));
   });
 
   const onSave = vscode.workspace.onWillSaveTextDocument((event) => {
@@ -110,7 +110,7 @@ function activate(context) {
     const combHandler = new csscomb(defaultConfig);
     const actions = combHandler.processString(content, { syntax }).then(newString => {
       return [vscode.TextEdit.replace(range, newString)]
-    }, err => showOutput(err));
+    }, err => showOutput(err.stack));
     event.waitUntil(actions)
   });
 
