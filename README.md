@@ -14,7 +14,10 @@
 
 - Install [vue-style-beautify](https://marketplace.visualstudio.com/items?itemName=xiguaxigua.vue-style-beautify)
 - key: cmd+shift+i
-- settings: vueStyle.formatOnSave (default `true`)
+- settings: 
+  - vueStyle.formatOnSave (default `true`)
+  - vueStyle.ignoreFilesOnSave (default [])
+  - vueStyle.preset (default {}): you can change csscomb settings by this
 
 ### LICENSE
 
