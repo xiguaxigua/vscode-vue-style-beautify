@@ -70,7 +70,6 @@
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "node ./node_modules/vscode/bin/test",
-    "changelog": "auto-changelog && git add . && git commit -m 'add: changelog'",
     "deploy": "vsce publish"
   },
   "devDependencies": {
