@@ -15,10 +15,10 @@
     padding-top: 20px;
     li {
       display: inline-block;
-      padding: 0 10px;
+        padding: 0 10px;
       min-width: 100px;
-      &:nth-child(2) {
-        border-left: 1px solid $gray;
+        &:nth-child(2) {
+          border-left: 1px solid $gray;
         border-right: 1px solid $gray;
       }
       

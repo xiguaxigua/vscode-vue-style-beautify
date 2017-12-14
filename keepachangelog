@@ -1,0 +1,23 @@
+### Changelog
+
+{{#each releases}}
+  {{#if href}}
+    {{#if major}}
+      ### [{{title}}]({{href}}) | {{niceDate}}
+    {{else}}
+      #### [{{title}}]({{href}}) | {{niceDate}}
+    {{/if}}
+  {{else}}
+    #### {{title}} | {{niceDate}}
+  {{/if}}
+  {{#each merges}}
+    - {{message}} [`#{{id}}`]({{href}})
+  {{/each}}
+  {{#each fixes}}
+    - {{commit.subject}}{{#each fixes}} [`#{{id}}`]({{href}}){{/each}}
+  {{/each}}
+  {{#each commits}}
+    - {{subject}} [`{{shorthash}}`]({{href}})
+  {{/each}}
+
+{{/each}}

@@ -2,7 +2,7 @@
   "name": "vue-style-beautify",
   "displayName": "vue-style-beautify",
   "description": "beautify css in your vue project",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "publisher": "xiguaxigua",
   "engines": {
     "vscode": "^1.18.0"
@@ -10,6 +10,17 @@
   "categories": [
     "Formatters"
   ],
+  "author": {
+    "name": "xiguaxigua",
+    "url": "https://daxigua.me"
+  },
+  "homepage": "https://github.com/xiguaxigua/vue-style-beautify/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiguaxigua/vscode-vue-style-beautify.git"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
   "activationEvents": [
     "onCommand:vueStyle.beautify",
     "onLanguage:vue",
@@ -58,7 +69,9 @@
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ./node_modules/vscode/bin/test"
+    "test": "node ./node_modules/vscode/bin/test",
+    "changelog": "auto-changelog && git add . && git commit -m 'add: changelog'",
+    "deploy": "npm run changelog && vsce publish"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
@@ -70,5 +83,8 @@
   "dependencies": {
     "csscomb": "^4.2.0",
     "micromatch": "^3.1.4"
+  },
+  "auto-changelog": {
+    "template": "keepachangelog"
   }
 }
