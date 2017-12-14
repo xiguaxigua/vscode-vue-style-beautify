@@ -1,7 +1,21 @@
-### vue-style-beautify
+# vue-style-beautify
 
-#### 快捷键 cmd+shift+i
+[![](https://vsmarketplacebadge.apphb.com/version-short/xiguaxigua.vue-style-beautify.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=xiguaxigua.vue-style-beautify)
+[![](https://vsmarketplacebadge.apphb.com/installs-short/xiguaxigua.vue-style-beautify.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=xiguaxigua.vue-style-beautify)
 
-#### settings 配置
+### Features
 
-vueStyle.formatOnSave 是否在保存时自动格式化, 默认为 true
+- beautify you css rules
+- better css order
+- auto change after save
+- selection beautify
+
+### Quick Start
+
+- Install [vue-style-beautify](https://marketplace.visualstudio.com/items?itemName=xiguaxigua.vue-style-beautify)
+- key: cmd+shift+i
+- settings: vueStyle.formatOnSave (default `true`)
+
+### LICENSE
+
+MIT
