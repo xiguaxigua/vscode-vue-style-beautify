@@ -1,5 +1,7 @@
 const vscode = require('vscode');
 const csscomb = require('csscomb');
+const micromatch = require('micromatch');
+const path = require('path');
 const defaultConfig = require('./default-config');
 
 const EMBEDDED_FILE_SUPPORT = ['html', 'htm', 'vue', 'vue-html']
@@ -77,8 +79,6 @@ function getBlock (args) {
     block = getEmbeddedBlock({ document });
   } else if (~CSS_FILE_SUPPORT.indexOf(languageId)) {
     block = getCssBlock({ document, selection });
-  } else {
-    showOutput(`${ languageId } syntac not support now.`);
   }
   return block
 }
@@ -88,9 +88,12 @@ function activate(context) {
     const { document, selection } = textEditor;
     const { languageId } = document;
     const block = getBlock({ languageId, document, selection });
-    if (!block) return;
+    if (!block) return showOutput(`${ languageId } syntac not support now.`);
     const { range, content, syntax } = block;
-    const combHandler = new csscomb(defaultConfig);
+    const settings = vscode.workspace.getConfiguration('vueStyle');
+    const preset = settings ? settings.preset : {}
+    const config = Object.assign({}, defaultConfig, preset);
+    const combHandler = new csscomb(config);
 
     combHandler.processString(content, { syntax }).then(newString => {
       textEditor.edit(builder => {
@@ -101,13 +104,26 @@ function activate(context) {
 
   const onSave = vscode.workspace.onWillSaveTextDocument((event) => {
     const { document } = event;
-    const { languageId } = document;
+    const { languageId, fileName } = document;
     const settings = vscode.workspace.getConfiguration('vueStyle');
     if (!settings || !settings.formatOnSave) return null;
+    const { ignoreFilesOnSave, preset } = settings
+    let excludes = [];
+		if (ignoreFilesOnSave) {
+			excludes = excludes.concat(ignoreFilesOnSave);
+		}
+		if (typeof preset === 'object' && preset.exclude) {
+			excludes = excludes.concat(preset.exclude);
+		}
+		if (excludes.length) {
+			const currentFile = path.relative(vscode.workspace.rootPath, fileName);
+			if (micromatch([currentFile], excludes).length) return null;
+		}
     const block = getBlock({ languageId, document });
     if (!block) return;
     const { range, content, syntax } = block;
-    const combHandler = new csscomb(defaultConfig);
+    const config = Object.assign({}, defaultConfig, preset);
+    const combHandler = new csscomb(config);
     const actions = combHandler.processString(content, { syntax }).then(newString => {
       return [vscode.TextEdit.replace(range, newString)]
     }, err => showOutput(err.stack));

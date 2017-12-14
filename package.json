@@ -44,14 +44,20 @@
       "properties": {
         "vueStyle.formatOnSave": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Auto format while save file.",
           "scope": "resource"
         },
         "vueStyle.ignoreFilesOnSave": {
           "type": "array",
           "default": [],
-          "description": "files witch not format while save",
+          "description": "files which not format on save",
+          "scope": "resource"
+        },
+        "vueStyle.preset": {
+          "type": "object",
+          "default": {},
+          "description": "csscomb settings",
           "scope": "resource"
         }
       }

@@ -1,5 +1,8 @@
 ### Changelog
 
+#### v0.1.2| 2017-12-14
+- add: settings of preset
+
 #### v0.1.1| 2017-12-14
 - change: readme
 

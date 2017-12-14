@@ -1,0 +1,9 @@
+{
+  "vueStyle.ignoreFilesOnSave": [
+    "style1.css"
+  ],
+  "vueStyle.formatOnSave": false,
+  "vueStyle.preset": {
+    "leading-zero": true
+  }
+}
