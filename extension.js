@@ -34,9 +34,8 @@ function getEmbeddedBlock (args) {
         tag += char;
         pos++;
       } while (char !== '>' && pos < text.length);
-
       const matchedSyntax = tag.match(/lang=['"](.+)?['"]/);
-      syntax = matchedSyntax[1] || 'css';
+      syntax = matchedSyntax ? matchedSyntax[1] : 'css';
       startIndex = pos + 1;
     }
 
