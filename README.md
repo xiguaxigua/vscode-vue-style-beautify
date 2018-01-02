@@ -19,6 +19,11 @@
   - vueStyle.ignoreFilesOnSave (default [])
   - vueStyle.preset (default {}): you can change csscomb settings by this
 
+### Set config
+
+[default config](./default-config) is here, you can get you own config through
+ this [tools](http://csscomb.com/config) and set it in `vueStyle.preset` config.
+
 ### LICENSE
 
 MIT
