@@ -2,7 +2,7 @@
   "name": "vue-style-beautify",
   "displayName": "vue-style-beautify",
   "description": "beautify css in your vue project",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "publisher": "xiguaxigua",
   "engines": {
     "vscode": "^1.18.0"
