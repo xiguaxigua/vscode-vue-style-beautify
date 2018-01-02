@@ -1,7 +1,7 @@
 <template>
 </template>
 
-<style lang="less">
+<style>
 body {
   width: 10px;
   height: 10px;

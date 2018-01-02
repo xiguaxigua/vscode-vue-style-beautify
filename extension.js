@@ -35,7 +35,7 @@ function getEmbeddedBlock (args) {
         pos++;
       } while (char !== '>' && pos < text.length);
       const matchedSyntax = tag.match(/lang=['"](.+)?['"]/);
-      syntax = matchedSyntax ? matchedSyntax[1] : 'css';
+      syntax = matchedSyntax ? matchedSyntax[1] : 'less';
       startIndex = pos + 1;
     }
 
@@ -53,7 +53,7 @@ function getEmbeddedBlock (args) {
 }
 
 function getCssBlock (args) {
-  const { document, selection } = args;
+  const { document, selection, languageId } = args;
   let range = null;
   let content = null;
 
@@ -68,7 +68,7 @@ function getCssBlock (args) {
     content = document.getText(range);
   }
 
-  return { range, content, syntax: 'css' };
+  return { range, content, syntax: languageId };
 }
 
 function getBlock (args) {
@@ -77,7 +77,7 @@ function getBlock (args) {
   if (~EMBEDDED_FILE_SUPPORT.indexOf(languageId)) {
     block = getEmbeddedBlock({ document });
   } else if (~CSS_FILE_SUPPORT.indexOf(languageId)) {
-    block = getCssBlock({ document, selection });
+    block = getCssBlock({ document, selection, languageId });
   }
   return block
 }
