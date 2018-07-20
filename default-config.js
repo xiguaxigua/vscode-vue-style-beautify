@@ -228,6 +228,6 @@ module.exports = {
     "scrollbar",
     "widows",
     
-    "write-mode"
+    "writing-mode"
   ]
 }
