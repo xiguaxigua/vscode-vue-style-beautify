@@ -226,6 +226,8 @@ module.exports = {
     "unicode-bidi",
     "user-select",
     "scrollbar",
-    "widows"
+    "widows",
+    
+    "write-mode"
   ]
 }
